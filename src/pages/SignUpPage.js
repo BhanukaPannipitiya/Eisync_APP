@@ -4,21 +4,45 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "react-native-responsive-screen";
+import CustomTextFieldWithTitle from "../components/CustomTextFieldWithTitle";
+import CustomSubmit from "../components/CustomSubmitButton";
 
 const SignUpPage = () => {
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require("../assets/splash.png")} />
       </View>
       <View style={styles.heading}>
         <Text style={styles.headingText}>
           Let’s make your
-          <Text style={styles.highlighText}> account!</Text>
+          <Text style={styles.highlightText}> account!</Text>
         </Text>
       </View>
-      <View style={styles.signUpOptions}>
-        <Text style={styles.signUpOptionsText}>Sign up with</Text>
+      <View style={styles.signUpContainer}>
+        <View style={styles.signUpOptions}>
+          <Text style={styles.signUpOptionsText}>Email</Text>
+          <CustomTextFieldWithTitle placeholder={"Email"} />
+        </View>
+        <View style={styles.signUpOptions}>
+          <Text style={styles.signUpOptionsText}>Password</Text>
+          <CustomTextFieldWithTitle
+            placeholder={"Password"}
+            secureTextEntry={true}
+          />
+        </View>
+        <View style={styles.signUpOptions}>
+          <Text style={styles.signUpOptionsText}>Confirm Password</Text>
+          <CustomTextFieldWithTitle
+            placeholder={"Confirm Password"}
+            secureTextEntry={true}
+          />
+        </View>
+        <CustomSubmit
+          inlineStyle={{ color: "white" }}
+          submitText={"Register"}
+          backgroundColor={"#4ECCA3"}
+        />
       </View>
     </View>
   );
@@ -29,13 +53,14 @@ export default SignUpPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start",
+  },
+  logoContainer: {
+    alignItems: "center", // Align items in the center
+    justifyContent: "center",
+    marginTop: heightPercentageToDP(6),
   },
   logo: {
-    marginTop: heightPercentageToDP(6),
     width: widthPercentageToDP(25),
     height: heightPercentageToDP(10),
   },
@@ -51,13 +76,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "Popins",
   },
-  highlighText: {
+  highlightText: {
     color: "#4ECCA3",
   },
   signUpOptions: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    marginTop: heightPercentageToDP(2),
+    marginBottom: heightPercentageToDP(2),
+  },
+  signUpOptionsText: {
+    fontSize: heightPercentageToDP(2),
+    color: "#696565",
+    fontWeight: "normal",
+    fontFamily: "Popins",
+  },
+  signUpContainer: {
+    marginLeft: widthPercentageToDP(10),
   },
 });
