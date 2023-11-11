@@ -33,7 +33,7 @@ const CustomTextFieldWithTitle = ({
         height: height ? height : 50,
         borderRadius: 20,
       },
-      paddingLeft: 20,
+      paddingLeft: 50,
       paddingRight: 20,
       borderRadius: 2,
       fontFamily: "popins-med",

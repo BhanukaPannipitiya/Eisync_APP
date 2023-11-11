@@ -18,7 +18,7 @@ const CustomSubmit = ({
       },
 
       "@media (max-width: 799px)": {
-        width: 330,
+        width: 300,
         height: 50,
         borderRadius: 20,
       },

@@ -1,13 +1,51 @@
-import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "react-native-responsive-screen";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import CustomTextFieldWithTitle from "../components/CustomTextFieldWithTitle";
 import CustomSubmit from "../components/CustomSubmitButton";
+import { useNavigation } from "@react-navigation/native";
+
+const SignUpSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
+});
 
 const SignUpPage = () => {
+  const navigation = useNavigation();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: SignUpSchema,
+    onSubmit: (values) => {
+      // Handle form submission, you can use values object here
+      console.log("Register", values);
+    },
+  });
+
+  const signInNavigation = () => {
+    navigation.navigate("SignIn");
+  };
+
+  const handleFacebookSignIn = () => {
+    console.log("Facebook login");
+  };
+
+  const handleGoogleSignIn = () => {
+    console.log("Google login");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -22,27 +60,110 @@ const SignUpPage = () => {
       <View style={styles.signUpContainer}>
         <View style={styles.signUpOptions}>
           <Text style={styles.signUpOptionsText}>Email</Text>
-          <CustomTextFieldWithTitle placeholder={"Email"} />
+          <View style={styles.emailContainer}>
+            <CustomTextFieldWithTitle
+              placeholder={"Enter your email"}
+              value={formik.values.email}
+              onChangeText={formik.handleChange("email")}
+              onBlur={formik.handleBlur("email")}
+            />
+            <Image
+              style={styles.emailIcon}
+              source={require("../assets/Email.png")}
+            />
+          </View>
+          <Text style={styles.errorText}>
+            {formik.touched.email && formik.errors.email}
+          </Text>
         </View>
         <View style={styles.signUpOptions}>
           <Text style={styles.signUpOptionsText}>Password</Text>
-          <CustomTextFieldWithTitle
-            placeholder={"Password"}
-            secureTextEntry={true}
-          />
+          <View style={styles.lockContainer}>
+            <CustomTextFieldWithTitle
+              placeholder={"Enter password"}
+              secureTextEntry={true}
+              value={formik.values.password}
+              onChangeText={formik.handleChange("password")}
+              onBlur={formik.handleBlur("password")}
+            />
+            <Image
+              style={styles.emailIcon}
+              source={require("../assets/Lock.png")}
+            />
+          </View>
+          <Text style={styles.errorText}>
+            {formik.touched.password && formik.errors.password}
+          </Text>
         </View>
         <View style={styles.signUpOptions}>
           <Text style={styles.signUpOptionsText}>Confirm Password</Text>
-          <CustomTextFieldWithTitle
-            placeholder={"Confirm Password"}
-            secureTextEntry={true}
-          />
+          <View style={styles.lockContainer}>
+            <CustomTextFieldWithTitle
+              placeholder={"Enter confirm password"}
+              secureTextEntry={true}
+              value={formik.values.confirmPassword}
+              onChangeText={formik.handleChange("confirmPassword")}
+              onBlur={formik.handleBlur("confirmPassword")}
+            />
+            <Image
+              style={styles.emailIcon}
+              source={require("../assets/Lock.png")}
+            />
+          </View>
+          <Text style={styles.errorText}>
+            {formik.touched.confirmPassword && formik.errors.confirmPassword}
+          </Text>
         </View>
-        <CustomSubmit
-          inlineStyle={{ color: "white" }}
-          submitText={"Register"}
-          backgroundColor={"#4ECCA3"}
-        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={formik.handleSubmit}>
+            <CustomSubmit
+              buttonFunction={() => console.log("Register")}
+              inlineStyle={{ color: "white" }}
+              submitText={"Register"}
+              backgroundColor={"#4ECCA3"}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.subHeading}>
+        <Text style={styles.subHeadingText}>
+          Already have an account?
+          <Text style={styles.highlightText} onPress={signInNavigation}>
+            {" "}
+            Sign in{" "}
+          </Text>
+        </Text>
+      </View>
+      <View style={styles.optionsContainer}>
+        <View style={styles.lineDivide}></View>
+        <View>
+          <Text style={styles.optionText}>Or</Text>
+        </View>
+        <View style={styles.lineDivide}></View>
+      </View>
+      <View style={styles.optionsIconsContainer}>
+        <View>
+          <TouchableOpacity
+            style={styles.facebookIconContainer}
+            onPress={handleFacebookSignIn}>
+            <Image
+              style={styles.facebookIcon}
+              source={require("../assets/Facebook.png")}
+            />
+            <Text style={styles.facebookText}> Sign Up Using Facebook</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            style={styles.googleContainer}
+            onPress={handleGoogleSignIn}>
+            <Image
+              style={styles.googleIcon}
+              source={require("../assets/Google.png")}
+            />
+            <Text style={styles.googleText}> Sign Up Using Google</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -56,7 +177,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   logoContainer: {
-    alignItems: "center", // Align items in the center
+    alignItems: "center",
     justifyContent: "center",
     marginTop: heightPercentageToDP(6),
   },
@@ -64,7 +185,78 @@ const styles = StyleSheet.create({
     width: widthPercentageToDP(25),
     height: heightPercentageToDP(10),
   },
+  facebookIconContainer: {
+    width: widthPercentageToDP(70),
+    height: heightPercentageToDP(5),
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#4ECCA3",
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  googleContainer: {
+    width: widthPercentageToDP(70),
+    height: heightPercentageToDP(5),
+    paddingLeft: widthPercentageToDP(0),
+    paddingRight: widthPercentageToDP(0),
+    paddingBottom: heightPercentageToDP(0),
+    paddingTop: heightPercentageToDP(0),
+    marginTop: heightPercentageToDP(2),
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#4ECCA3",
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  googleIcon: {
+    width: widthPercentageToDP(7),
+    height: heightPercentageToDP(3),
+    marginRight: widthPercentageToDP(2),
+  },
+  emailContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  lockContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  googleText: {
+    fontSize: 14,
+    fontWeight: "normal",
+    fontFamily: "Popins",
+    color: "black",
+  },
+  facebookIcon: {
+    width: widthPercentageToDP(7),
+    height: heightPercentageToDP(3),
+    marginRight: widthPercentageToDP(2),
+  },
+  emailIcon: {
+    width: widthPercentageToDP(5),
+    height: heightPercentageToDP(2),
+    marginTop: heightPercentageToDP(1),
+    marginLeft: widthPercentageToDP(3),
+    position: "absolute",
+  },
+  facebookText: {
+    fontSize: 14,
+    fontWeight: "normal",
+    fontFamily: "Popins",
+    color: "black",
+  },
   heading: {
+    alignItems: "left",
+    justifyContent: "center",
+  },
+  optionsIconsContainer: {
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -79,6 +271,25 @@ const styles = StyleSheet.create({
   highlightText: {
     color: "#4ECCA3",
   },
+  optionsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: heightPercentageToDP(2),
+  },
+  lineDivide: {
+    borderBottomColor: "#696565",
+    width: 130,
+    margin: 20,
+    borderBottomWidth: 1,
+  },
+  optionText: {
+    marginLeft: widthPercentageToDP(2),
+    marginRight: widthPercentageToDP(2),
+    fontSize: 14,
+    fontFamily: "Roboto-Regular",
+    color: "black",
+  },
   signUpOptions: {
     marginTop: heightPercentageToDP(2),
     marginBottom: heightPercentageToDP(2),
@@ -91,5 +302,20 @@ const styles = StyleSheet.create({
   },
   signUpContainer: {
     marginLeft: widthPercentageToDP(10),
+  },
+  subHeadingText: {
+    marginLeft: widthPercentageToDP(10),
+    marginTop: heightPercentageToDP(2),
+    fontSize: heightPercentageToDP(2),
+  },
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: widthPercentageToDP(13),
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginTop: 5,
   },
 });
