@@ -11,7 +11,7 @@ const WelcomPage = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => navigation.navigate("Home"), 3000);
+    setTimeout(() => navigation.navigate("StarterPage"), 3000);
   }, []);
   return (
     <View style={styles.container}>
