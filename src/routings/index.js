@@ -18,7 +18,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="OtpVerification"
+        initialRouteName="CreateNewPassword"
         screenOptions={{ headerShown: false }}>
         <Stack.Screen name="StarterPage" component={StarterPage} />
         <Stack.Screen name="WelcomPage" component={WelcomPage} />
