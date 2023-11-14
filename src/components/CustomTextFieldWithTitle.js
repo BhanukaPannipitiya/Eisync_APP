@@ -36,7 +36,7 @@ const CustomTextFieldWithTitle = ({
       paddingLeft: 50,
       paddingRight: 20,
       borderRadius: 2,
-      fontFamily: "popins-med",
+      fontFamily: "Poppins",
       backgroundColor: "#fff",
       borderColor: "#4ECCA3",
       borderWidth: 1,

@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     marginRight: widthPercentageToDP(10),
     fontSize: heightPercentageToDP(4),
     fontWeight: "bold",
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
   },
   highlightText: {
     color: "#4ECCA3",
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: heightPercentageToDP(2),
     fontWeight: "bold",
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
   },
   eyeIcon: {
     width: widthPercentageToDP(5),

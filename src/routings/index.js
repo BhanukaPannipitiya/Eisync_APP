@@ -25,8 +25,10 @@ const AppNavigation = () => {
         <Stack.Screen name="SignUp" component={SignUpPage} />
         <Stack.Screen name="OtpVerification" component={OTPVerificationPage} />
         <Stack.Screen name="SignIn" component={SignInPage} />
-        <Stack.Screen name="CreateNewPassword" component={CreateNewPasswordPage} />
-
+        <Stack.Screen
+          name="CreateNewPassword"
+          component={CreateNewPasswordPage}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

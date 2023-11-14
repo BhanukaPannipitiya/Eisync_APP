@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginRight: widthPercentageToDP(10),
     fontSize: heightPercentageToDP(4),
     fontWeight: "bold",
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
   },
   highlighText: {
     color: "#4ECCA3",
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   subHeadingText: {
     color: "#696565",
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
     fontSize: heightPercentageToDP(2),
     fontStyle: "normal",
     fontWeight: "normal",

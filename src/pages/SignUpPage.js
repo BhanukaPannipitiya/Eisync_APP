@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   googleText: {
     fontSize: 14,
     fontWeight: "normal",
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
     color: "black",
   },
   facebookIcon: {
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
   facebookText: {
     fontSize: 14,
     fontWeight: "normal",
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
     color: "black",
   },
   heading: {
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     marginRight: widthPercentageToDP(10),
     fontSize: heightPercentageToDP(4),
     fontWeight: "bold",
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
   },
   highlightText: {
     color: "#4ECCA3",
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     marginLeft: widthPercentageToDP(2),
     marginRight: widthPercentageToDP(2),
     fontSize: 14,
-    fontFamily: "Roboto-Regular",
+    fontFamily: "Poppins",
     color: "black",
   },
   signUpOptions: {
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     fontSize: heightPercentageToDP(2),
     color: "#696565",
     fontWeight: "normal",
-    fontFamily: "Popins",
+    fontFamily: "Poppins",
   },
   signUpContainer: {
     marginLeft: widthPercentageToDP(10),

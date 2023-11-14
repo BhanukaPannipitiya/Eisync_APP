@@ -35,7 +35,7 @@ const CustomSubmit = ({
       color: "#E92F17",
       fontSize: heightPercentageToDP(2),
     fontWeight: "bold",
-      fontFamily: "poppins",
+      fontFamily: "Poppins",
     },
   });
 

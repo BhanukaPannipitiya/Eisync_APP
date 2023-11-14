@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
       marginRight: widthPercentageToDP(2),
       fontSize: heightPercentageToDP(4),
       fontWeight: "bold",
-      fontFamily: "Popins",
+      fontFamily: "Poppins",
     },
     highlighText: {
       color: "#4ECCA3",
