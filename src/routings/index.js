@@ -12,13 +12,14 @@ import SignUpPage from "../pages/SignUpPage";
 import OTPVerificationPage from "../pages/OTPVerificationPage";
 import SignInPage from "../pages/SignInPage";
 import CreateNewPasswordPage from "../pages/CreateNewPasswordPage";
+import Home from "../pages/Home";
 
 const Stack = createNativeStackNavigator();
 const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="CreateNewPassword"
+        initialRouteName="Home"
         screenOptions={{ headerShown: false }}>
         <Stack.Screen name="StarterPage" component={StarterPage} />
         <Stack.Screen name="WelcomPage" component={WelcomPage} />
@@ -29,6 +30,7 @@ const AppNavigation = () => {
           name="CreateNewPassword"
           component={CreateNewPasswordPage}
         />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
