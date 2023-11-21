@@ -1,7 +1,11 @@
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import AppNavigation from "./src/routings";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import AppNavigation from "./src/routings/AuthNavigator";
 import { useFonts } from "expo-font";
+import Header from "./src/components/Header";
+import MainStack from "./src/routings/MainStack";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -11,5 +15,9 @@ export default function App() {
     return null;
   }
 
-  return <AppNavigation />;
+  return (
+      <NavigationContainer>
+        <MainStack />
+      </NavigationContainer>
+  );
 }

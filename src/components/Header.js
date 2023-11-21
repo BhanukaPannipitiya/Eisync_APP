@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   Image,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 
@@ -15,7 +15,12 @@ const Header = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.dashboardIcon}>
-          <Ionicons name="menu" size={30} color="#000" />
+          <Ionicons
+            name="menu"
+            size={30}
+            color="#000"
+            style={styles.menuIcon}
+          />
         </TouchableOpacity>
         <Image
           source={require("../assets/splash.png")}
@@ -23,7 +28,10 @@ const Header = () => {
         />
         <TouchableOpacity style={styles.notificationIcon}>
           <View style={styles.profileContainer}>
-            <Image source={require("../assets/profpic.png")} style={styles.profileIcon} />
+            <Image
+              source={require("../assets/profpic.png")}
+              style={styles.profileIcon}
+            />
           </View>
         </TouchableOpacity>
       </View>
@@ -50,13 +58,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 50,
     borderColor: "#4ECCA3",
-    height: heightPercentageToDP(6),
-    width: heightPercentageToDP(6),
+    height: heightPercentageToDP(5),
+    width: heightPercentageToDP(5),
   },
   profileIcon: {
     borderRadius: 50,
-    marginLeft: heightPercentageToDP(0.5),
-    height: heightPercentageToDP(5),
-    width: heightPercentageToDP(5),
+    marginLeft: heightPercentageToDP(0.3),
+    marginTop: heightPercentageToDP(0.1),
+    height: heightPercentageToDP(4),
+    width: heightPercentageToDP(4),
   },
 });

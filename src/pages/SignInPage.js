@@ -46,6 +46,9 @@ const SignInPage = () => {
     console.log("Google login");
   };
 
+  const handleAppleSignIn = () => {
+    navigation.navigate("Home");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -99,7 +102,7 @@ const SignInPage = () => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={formik.handleSubmit}>
             <CustomSubmit
-              buttonFunction={() => console.log("Register")}
+              buttonFunction={() => handleAppleSignIn()}
               inlineStyle={{ color: "white" }}
               submitText={"Login"}
               backgroundColor={"#4ECCA3"}

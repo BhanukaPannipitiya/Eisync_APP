@@ -8,7 +8,6 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
-        <Header style={styles.header}></Header>
         <View style={styles.centerContent}>
           <Text>Home</Text>
         </View>
@@ -27,9 +26,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     justifyContent: "space-evenly",
-  },
-  header: {
-    // Your Header styles
   },
   centerContent: {
     flex: 1,
