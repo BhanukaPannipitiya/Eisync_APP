@@ -1,8 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons, FontAwesome, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function BottomNav() {
+
+const navigation = useNavigation();
+
+  const handleDevices = () => {
+    navigation.navigate('ViewDevices');
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.navItem}>
@@ -14,7 +22,7 @@ export default function BottomNav() {
       <TouchableOpacity style={styles.navItem}>
         <SimpleLineIcons name="energy" size={30} color="#000" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem}>
+      <TouchableOpacity style={styles.navItem} onPress={handleDevices()}>
         <MaterialIcons name="add-to-queue" size={30} color="#000" />
       </TouchableOpacity>
     </View>

@@ -18,9 +18,7 @@ const SignUpSchema = Yup.object().shape({
     .required("Confirm Password is required"),
 });
 
-const SignInPage = () => {
-  const navigation = useNavigation();
-
+const SignInPage = ({navigation}) => {
   const formik = useFormik({
     initialValues: {
       email: "",

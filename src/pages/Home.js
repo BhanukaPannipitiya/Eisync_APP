@@ -11,7 +11,6 @@ const Home = () => {
         <View style={styles.centerContent}>
           <Text>Home</Text>
         </View>
-        <BottomNav></BottomNav>
       </View>
     </SafeAreaView>
   );
