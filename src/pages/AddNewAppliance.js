@@ -16,6 +16,7 @@ import {
 import BottomNav from "../components/NavigationBarBottom";
 import CustomTextFieldWithTitle from "../components/CustomTextFieldWithTitle";
 import CustomSubmit from "../components/CustomSubmitButton";
+import { register } from "../Apis/UserAPI";
 
 const AddNewAppliance = () => {
   const [deviceType, setDeviceType] = useState("");
@@ -25,18 +26,62 @@ const AddNewAppliance = () => {
   const [voltage, setVoltage] = useState("");
   const [estimatedOnHours, setEstimatedOnHours] = useState("");
 
-  const submitForm = () => {
-    // You can implement your logic to send data to the database here
-    // For example, you can use a fetch or axios to make a network request
-    const formData = {
-      deviceType,
-      deviceBrand,
-      deviceModel,
-      power,
-      voltage,
-      estimatedOnHours,
+  // const submitForm = () => {
+  //   // You can implement your logic to send data to the database here
+  //   // For example, you can use a fetch or axios to make a network request
+  //   const formData = {
+  //     DeviceType: deviceType,
+  //     DeviceBrand: deviceBrand,
+  //     DeviceModel: deviceModel,
+  //     Power: power,
+  //     Voltage: voltage,
+  //     OnHours: estimatedOnHours,
+  //   };
+  //   console.log(formData);
+  //   register(formData);
+  // };
+
+  // Assuming this code is within a function or an event handler in your frontend application
+
+  const addAppliance = async () => {
+    const apiUrl = "http://192.168.8.164:3000/addAppliance"; // Replace with your actual API endpoint
+
+    const requestBody = {
+      deviceType: deviceType ,
+      power: power,
+      voltage: voltage,
+      onHours: estimatedOnHours,
+      deviceModel: deviceModel,
+      deviceBrand: deviceBrand,
+      isActive: true,
+      createdOn: new Date(),
+      userId:Math.floor(Math.random() * 100) + 1 ,
     };
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log("API response:", result);
+      // Handle the response as needed in your frontend
+    } catch (error) {
+      console.error("Error:", error.message);
+      // Handle errors in your frontend
+    }
   };
+
+  // Call the function to add an appliance
+
   return (
     <SafeAreaView style={styles.parentContainer}>
       <ScrollView>
@@ -46,7 +91,7 @@ const AddNewAppliance = () => {
               Add new <Text style={styles.subHeading}>appliance</Text>
             </Text>
           </View>
-          
+
           <Image
             style={styles.image}
             source={require("../assets/appliance.png")}
@@ -90,10 +135,12 @@ const AddNewAppliance = () => {
               onChangeText={(text) => setEstimatedOnHours(text)}
             />
             {/* Add a button to submit the form */}
-            <TouchableOpacity style={styles.submitButton} onPress={submitForm}>
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={addAppliance}>
               <CustomSubmit
-                buttonFunction={() => handleAppleSignIn()}
-                inlineStyle={{ color: "white"}}
+                buttonFunction={() => submitForm()}
+                inlineStyle={{ color: "white" }}
                 submitText={"Add"}
                 backgroundColor={"#4ECCA3"}
                 style={styles.submitButton}
@@ -135,7 +182,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 20,
     marginTop: 20,
-    
   },
   input: {
     backgroundColor: "#FFF",
@@ -161,6 +207,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#4ECCA3",
     justifyContent: "center",
     alignItems: "center",
-
-  }
+  },
 });
