@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -26,28 +27,21 @@ const AddNewAppliance = () => {
   const [voltage, setVoltage] = useState("");
   const [estimatedOnHours, setEstimatedOnHours] = useState("");
 
-  // const submitForm = () => {
-  //   // You can implement your logic to send data to the database here
-  //   // For example, you can use a fetch or axios to make a network request
-  //   const formData = {
-  //     DeviceType: deviceType,
-  //     DeviceBrand: deviceBrand,
-  //     DeviceModel: deviceModel,
-  //     Power: power,
-  //     Voltage: voltage,
-  //     OnHours: estimatedOnHours,
-  //   };
-  //   console.log(formData);
-  //   register(formData);
-  // };
-
-  // Assuming this code is within a function or an event handler in your frontend application
+  const showToast = (message) => {
+    ToastAndroid.showWithGravityAndOffset(
+      message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50
+    );
+  };
 
   const addAppliance = async () => {
-    const apiUrl = "http://192.168.8.164:3000/addAppliance"; // Replace with your actual API endpoint
+    const apiUrl = "http://192.168.8.164:3000/addAppliance";
 
     const requestBody = {
-      deviceType: deviceType ,
+      deviceType: deviceType,
       power: power,
       voltage: voltage,
       onHours: estimatedOnHours,
@@ -55,7 +49,7 @@ const AddNewAppliance = () => {
       deviceBrand: deviceBrand,
       isActive: true,
       createdOn: new Date(),
-      userId:Math.floor(Math.random() * 100) + 1 ,
+      userId: Math.floor(Math.random() * 100) + 1,
     };
 
     try {
@@ -73,14 +67,22 @@ const AddNewAppliance = () => {
 
       const result = await response.json();
       console.log("API response:", result);
-      // Handle the response as needed in your frontend
+
+      // Clear the form fields
+      setDeviceType("");
+      setDeviceBrand("");
+      setDeviceModel("");
+      setPower("");
+      setVoltage("");
+      setEstimatedOnHours("");
+
+      // Display a toast message
+      showToast("Device successfully added!");
     } catch (error) {
       console.error("Error:", error.message);
-      // Handle errors in your frontend
+      showToast("Error adding device. Please try again.");
     }
   };
-
-  // Call the function to add an appliance
 
   return (
     <SafeAreaView style={styles.parentContainer}>
@@ -139,7 +141,7 @@ const AddNewAppliance = () => {
               style={styles.submitButton}
               onPress={addAppliance}>
               <CustomSubmit
-                buttonFunction={() => submitForm()}
+                buttonFunction={() => addAppliance()}
                 inlineStyle={{ color: "white" }}
                 submitText={"Add"}
                 backgroundColor={"#4ECCA3"}
