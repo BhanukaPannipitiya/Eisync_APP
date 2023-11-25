@@ -19,6 +19,8 @@ import CustomTextFieldWithTitle from "../components/CustomTextFieldWithTitle";
 import CustomSubmit from "../components/CustomSubmitButton";
 import { register } from "../Apis/UserAPI";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const AddNewAppliance = () => {
   const [deviceType, setDeviceType] = useState("");
   const [deviceBrand, setDeviceBrand] = useState("");
@@ -38,7 +40,7 @@ const AddNewAppliance = () => {
   };
 
   const addAppliance = async () => {
-    const apiUrl = "http://192.168.8.164:3000/addAppliance";
+    const apiUrl = `http://192.168.8.164:3000/addAppliance`;
 
     const requestBody = {
       deviceType: deviceType,
