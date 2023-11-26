@@ -13,6 +13,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import CustomfiledwithDateButton from "../components/CustomfiledwithDateButton";
 import CustomSubmit from "../components/CustomSubmitButton";
 import AuthContext from "../context/AuthContext";
+import { REACT_APP_BASE_URL } from "@env";
 
 const CostEstimation = ({ navigation }) => {
   const { userId } = useContext(AuthContext);
@@ -42,7 +43,7 @@ const CostEstimation = ({ navigation }) => {
     try {
       // Replace 'YOUR_API_ENDPOINT' with the actual endpoint
       const response = await fetch(
-        `http://192.168.8.164:3000/getAllAppliances/?id=${userId}`
+        `${REACT_APP_BASE_URL}/getAllAppliances/?id=${userId}`
       );
       const data = await response.json();
       console.log(data);
@@ -135,7 +136,7 @@ const CostEstimation = ({ navigation }) => {
 
   const saveEstimation = async () => {
     try {
-      const response = await fetch("http://192.168.8.164:3000/saveEstimation", {
+      const response = await fetch(`${REACT_APP_BASE_URL}/saveEstimation`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -178,7 +179,7 @@ const CostEstimation = ({ navigation }) => {
 
     try {
       const response = await fetch(
-        "http://192.168.8.164:3000/calculateTotalCost",
+        `${REACT_APP_BASE_URL}/calculateTotalCost`,
         {
           method: "POST",
           headers: {

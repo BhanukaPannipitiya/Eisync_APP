@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ToggleSwitch from "toggle-switch-react-native";
 import { useNavigation } from "@react-navigation/native";
 import CircularProgress from "react-native-circular-progress-indicator";
+import { REACT_APP_BASE_URL } from "@env";
 
 const MyGoals = () => {
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ const MyGoals = () => {
   const fetchAppliances = async () => {
     try {
       const response = await fetch(
-        `http://192.168.8.164:3000/getAllAppliances`
+        `${REACT_APP_BASE_URL}/getAllAppliances`
       );
       const data = await response.json();
       setAppliances(data);

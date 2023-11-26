@@ -21,8 +21,7 @@ import { register } from "../Apis/UserAPI";
 import ToggleSwitch from "toggle-switch-react-native";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+import { REACT_APP_BASE_URL } from "@env";
 
 const AddNewAppliance = () => {
   const { userId } = useContext(AuthContext);
@@ -45,7 +44,7 @@ const AddNewAppliance = () => {
   };
 
   const addAppliance = async () => {
-    const apiUrl = `http://192.168.8.164:3000/addAppliance`;
+    const apiUrl = `${REACT_APP_BASE_URL}/addAppliance`;
 
     const requestBody = {
       deviceType: deviceType,

@@ -13,6 +13,7 @@ import { heightPercentageToDP } from "react-native-responsive-screen";
 import CustomSubmit from "../components/CustomSubmitButton";
 import ToggleSwitch from "toggle-switch-react-native";
 import CustomfiledwithDateButton from "../components/CustomfiledwithDateButton";
+import { REACT_APP_BASE_URL } from "@env";
 
 const AddGoal = () => {
   const [goalName, setGoalName] = useState("");
@@ -52,7 +53,7 @@ const AddGoal = () => {
         userId: "your_user_id",
       };
 
-      const response = await fetch("http://192.168.8.164:3000/createGoal", {
+      const response = await fetch(`${REACT_APP_BASE_URL}/createGoal`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

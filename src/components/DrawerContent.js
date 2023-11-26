@@ -8,6 +8,7 @@ import {
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import { MaterialIcons } from "@expo/vector-icons";
 import AuthContext from "../context/AuthContext";
+import { REACT_APP_BASE_URL } from "@env";
 
 const CustomDrawerContent = (props) => {
   const { userId } = useContext(AuthContext);
@@ -18,19 +19,19 @@ const CustomDrawerContent = (props) => {
     // Fetch user email from the API
     fetchUserEmail();
   }, [userId]);
-  console.log("first user", userId)
-  console.log("first", userEmail)
+  console.log("first user", userId);
+  console.log("first", userEmail);
 
   const fetchUserEmail = async () => {
     try {
       const response = await fetch(
-        `http://192.168.8.164:3000/getUserEmailById/?id=${userId}`
+        `${REACT_APP_BASE_URL}/getUserEmailById/?id=${userId}`
       ); // Replace with your API endpoint
       const data = await response.json();
-  
+
       // Assuming the API response contains the user email in the 'userEmail' field
       const userEmailFromAPI = data.userEmail;
-  
+
       setUserEmail(userEmailFromAPI);
       setLoading(false);
     } catch (error) {
@@ -38,7 +39,7 @@ const CustomDrawerContent = (props) => {
       setLoading(false);
     }
   };
-  
+
   const logout = () => {
     props.navigation.navigate("SignIn");
   };

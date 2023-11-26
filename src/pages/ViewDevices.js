@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ToggleSwitch from "toggle-switch-react-native";
 import { useNavigation } from "@react-navigation/native";
 import AuthContext from "../context/AuthContext";
+import { REACT_APP_BASE_URL } from "@env";
 
 const ViewDevices = () => {
   const { userId } = useContext(AuthContext);
@@ -21,6 +22,7 @@ const ViewDevices = () => {
   const [appliances, setAppliances] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState(null);
+  
 
   useEffect(() => {
     fetchAppliances();
@@ -32,7 +34,7 @@ const ViewDevices = () => {
     console.log("userId before fetch:", userId);
     try {
       const response = await fetch(
-        `http://192.168.8.164:3000/getAllAppliances/?id=${userId}`
+        `${REACT_APP_BASE_URL}/getAllAppliances/?id=${userId}`
       );
 
       if (!response.ok) {
@@ -75,7 +77,7 @@ const ViewDevices = () => {
     // Additional logic to update backend status if needed
     try {
       const response = await fetch(
-        `http://192.168.8.164:3000/updateDeviceOnHours`,
+        `${REACT_APP_BASE_URL}/updateDeviceOnHours`,
         {
           method: "POST",
           headers: {
@@ -100,7 +102,7 @@ const ViewDevices = () => {
     try {
       // Additional logic to update backend and remove the device
       const response = await fetch(
-        `http://192.168.8.164:3000/removeDevice`, // Adjust the endpoint accordingly
+        `${REACT_APP_BASE_URL}/removeDevice`, // Adjust the endpoint accordingly
         {
           method: "POST",
           headers: {

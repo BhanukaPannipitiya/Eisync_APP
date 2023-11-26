@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import CustomTextFieldWithTitle from "../components/CustomTextFieldWithTitle";
 import CustomSubmit from "../components/CustomSubmitButton";
 import { useNavigation } from "@react-navigation/native";
+import { REACT_APP_BASE_URL } from "@env";
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -35,7 +36,7 @@ const SignUpPage = () => {
   });
   const handleSignUp = async () => {
     try {
-      const response = await fetch("http://192.168.8.164:3000/createUser", {
+      const response = await fetch(`${REACT_APP_BASE_URL}/createUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

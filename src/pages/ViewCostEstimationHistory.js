@@ -9,6 +9,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import AuthContext from "../context/AuthContext";
+import {REACT_APP_BASE_URL} from "@env";
 
 const ViewCostEstimationHistory = () => {
   const { userId } = useContext(AuthContext); // Get user ID from context
@@ -19,7 +20,7 @@ const ViewCostEstimationHistory = () => {
     try {
       // Fetch estimations for the specific user ID (replace 'your-api-endpoint' with the actual API endpoint)
       const response = await fetch(
-        `http://192.168.8.164:3000/getAllEstimationsByUserId/?id=${userId}`
+        `${REACT_APP_BASE_URL}/getAllEstimationsByUserId/?id=${userId}`
       );
       const data = await response.json();
       setEstimations(data);

@@ -11,6 +11,7 @@ import CustomSubmit from "../components/CustomSubmitButton";
 import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
+import {REACT_APP_BASE_URL} from "@env";
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -36,7 +37,7 @@ const SignInPage = ({ navigation }) => {
   });
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://192.168.8.164:3000/loginUser", {
+      const response = await fetch(`${REACT_APP_BASE_URL}/loginUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
