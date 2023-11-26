@@ -33,6 +33,33 @@ const SignUpPage = () => {
       console.log("Register", values);
     },
   });
+  const handleSignUp = async () => {
+    try {
+      const response = await fetch("http://192.168.43.56:3000/createUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formik.values.email,
+          name: formik.values.name, // Add other form fields as needed
+          phoneNumber: formik.values.phoneNumber,
+          country: formik.values.country,
+          loginPassword: formik.values.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      console.log(data); // Log the response from the server
+
+      // Handle success, e.g., navigate to the next screen
+      // navigation.navigate('Home');
+    } catch (error) {
+      console.error("Error creating user:", error.message);
+      // Handle error, e.g., display an error message to the user
+    }
+  };
 
   const signInNavigation = () => {
     navigation.navigate("SignIn");
@@ -117,7 +144,7 @@ const SignUpPage = () => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={formik.handleSubmit}>
             <CustomSubmit
-              buttonFunction={() => console.log("Register")}
+              buttonFunction={handleSignUp}
               inlineStyle={{ color: "white" }}
               submitText={"Register"}
               backgroundColor={"#4ECCA3"}
@@ -145,7 +172,8 @@ const SignUpPage = () => {
         <View>
           <TouchableOpacity
             style={styles.facebookIconContainer}
-            onPress={handleFacebookSignIn}>
+            onPress={handleFacebookSignIn}
+          >
             <Image
               style={styles.facebookIcon}
               source={require("../assets/Facebook.png")}
@@ -156,7 +184,8 @@ const SignUpPage = () => {
         <View>
           <TouchableOpacity
             style={styles.googleContainer}
-            onPress={handleGoogleSignIn}>
+            onPress={handleGoogleSignIn}
+          >
             <Image
               style={styles.googleIcon}
               source={require("../assets/Google.png")}

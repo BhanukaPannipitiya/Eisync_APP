@@ -18,7 +18,7 @@ const SignUpSchema = Yup.object().shape({
     .required("Confirm Password is required"),
 });
 
-const SignInPage = ({navigation}) => {
+const SignInPage = ({ navigation }) => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -28,9 +28,37 @@ const SignInPage = ({navigation}) => {
     validationSchema: SignUpSchema,
     onSubmit: (values) => {
       // Handle form submission, you can use values object here
-      console.log("Register", values);
+      // navigation.navigate("Home")
     },
   });
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://192.168.43.56:3000/loginUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formik.values.email,
+          loginPassword: formik.values.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data.message); // Log the success message
+        // Handle successful login, e.g., navigate to the home screen
+        // navigation.navigate('Home');
+      } else {
+        console.error("Error:", data.message);
+        // Handle login failure, e.g., display an error message to the user
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+      // Handle other errors, e.g., network issues
+    }
+  };
 
   const signUpNavigation = () => {
     navigation.navigate("SignUp");
@@ -44,9 +72,10 @@ const SignInPage = ({navigation}) => {
     console.log("Google login");
   };
 
-  const handleAppleSignIn = () => {
-    navigation.navigate("Home");
+  const handleForgetPAssword = () => {
+    navigation.navigate("ForgetPassword");
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -100,7 +129,7 @@ const SignInPage = ({navigation}) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={formik.handleSubmit}>
             <CustomSubmit
-              buttonFunction={() => handleAppleSignIn()}
+              buttonFunction={handleLogin}
               inlineStyle={{ color: "white" }}
               submitText={"Login"}
               backgroundColor={"#4ECCA3"}
@@ -110,7 +139,9 @@ const SignInPage = ({navigation}) => {
       </View>
       <View style={styles.subHeading}>
         <TouchableOpacity>
-          <Text style={styles.subHeadingText}>Forgot Password?</Text>
+          <Text style={styles.subHeadingText} onPress={handleForgetPAssword}>
+            Forgot Password?
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.subHeading}>
@@ -135,7 +166,8 @@ const SignInPage = ({navigation}) => {
         <View>
           <TouchableOpacity
             style={styles.facebookIconContainer}
-            onPress={handleFacebookSignIn}>
+            onPress={handleFacebookSignIn}
+          >
             <Image
               style={styles.facebookIcon}
               source={require("../assets/Facebook.png")}
@@ -146,7 +178,8 @@ const SignInPage = ({navigation}) => {
         <View>
           <TouchableOpacity
             style={styles.googleContainer}
-            onPress={handleGoogleSignIn}>
+            onPress={handleGoogleSignIn}
+          >
             <Image
               style={styles.googleIcon}
               source={require("../assets/Google.png")}
