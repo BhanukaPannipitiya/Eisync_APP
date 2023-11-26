@@ -35,7 +35,7 @@ const SignUpPage = () => {
   });
   const handleSignUp = async () => {
     try {
-      const response = await fetch("http://192.168.43.56:3000/createUser", {
+      const response = await fetch("http://192.168.8.164:3000/createUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +54,7 @@ const SignUpPage = () => {
       console.log(data); // Log the response from the server
 
       // Handle success, e.g., navigate to the next screen
-      // navigation.navigate('Home');
+      navigation.navigate('Home');
     } catch (error) {
       console.error("Error creating user:", error.message);
       // Handle error, e.g., display an error message to the user

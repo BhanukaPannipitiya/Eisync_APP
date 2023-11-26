@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,8 +12,10 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import CustomfiledwithDateButton from "../components/CustomfiledwithDateButton";
 import CustomSubmit from "../components/CustomSubmitButton";
+import AuthContext from "../context/AuthContext";
 
 const CostEstimation = ({ navigation }) => {
+  const { userId } = useContext(AuthContext);
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   const [date, setDate] = useState(new Date());
@@ -34,13 +36,13 @@ const CostEstimation = ({ navigation }) => {
   useEffect(() => {
     // Fetch devices from the database when the component mounts
     fetchDevicesFromDatabase();
-  }, []);
+  }, [userId]);
 
   const fetchDevicesFromDatabase = async () => {
     try {
       // Replace 'YOUR_API_ENDPOINT' with the actual endpoint
       const response = await fetch(
-        "http://192.168.8.164:3000/getAllAppliances"
+        `http://192.168.8.164:3000/getAllAppliances/?id=${userId}`
       );
       const data = await response.json();
       console.log(data);
@@ -56,7 +58,6 @@ const CostEstimation = ({ navigation }) => {
       console.error("Error fetching devices:", error);
     }
   };
-
   const renderItem = ({ item, index }) => (
     <View style={styles.deviceItem}>
       <View style={styles.deviceRow}>
@@ -148,6 +149,7 @@ const CostEstimation = ({ navigation }) => {
           fixPrice,
           costPerUnit,
           totalCost,
+          userId,
         }),
       });
 

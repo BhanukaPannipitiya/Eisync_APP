@@ -6,10 +6,14 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
 import ToggleSwitch from "toggle-switch-react-native";
 import { useNavigation } from "@react-navigation/native";
+import CircularProgress from "react-native-circular-progress-indicator";
 
 const MyGoals = () => {
   const navigation = useNavigation();
@@ -41,35 +45,6 @@ const MyGoals = () => {
     );
   };
 
-  // const handleToggle = async (isOn, deviceId) => {
-  //   try {
-  //     const response = await fetch(`${BASE_URL}/updateDeviceStatus`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         deviceId,
-  //         status: isOn ? "on" : "off",
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       setAppliances((prevAppliances) =>
-  //         prevAppliances.map((appliance) =>
-  //           appliance._id === deviceId
-  //             ? { ...appliance, status: isOn ? "on" : "off" }
-  //             : appliance
-  //         )
-  //       );
-  //     } else {
-  //       console.error("Failed to update device status");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating device status:", error);
-  //   }
-  // };
-
   const handleAddGoals = () => {
     console.log("Add new device");
     navigation.navigate("AddGoal");
@@ -77,7 +52,10 @@ const MyGoals = () => {
   const renderItem = ({ item, index }) => {
     if (index === 0) {
       return (
-        <TouchableOpacity style={styles.addDevice} key="addButton" onPress={handleAddGoals}>
+        <TouchableOpacity
+          style={styles.addDevice}
+          key="addButton"
+          onPress={handleAddGoals}>
           <Ionicons name="add-circle-outline" size={100} color="#4ECCA3" />
         </TouchableOpacity>
       );
@@ -85,34 +63,26 @@ const MyGoals = () => {
 
     return (
       <View style={styles.deviceContainer} key={item._id}>
-        <View style={styles.deviceIconContainer}>
-          <Text style={styles.deviceName}>{item.deviceType}</Text>
-        </View>
-        <View style={styles.deviceSpecContainer}>
-          <View style={styles.deviceVoltageContainer}>
-            <Ionicons name="flash" size={24} color="#7BF3FF" />
-            <Text style={styles.deviceVoltage}>{item.voltage}</Text>
-          </View>
-          <View style={styles.deviceCurrentContainer}>
-            <Ionicons name="pulse" size={24} color="#7BF3FF" />
-            <Text style={styles.devicePower}>{item.power}</Text>
-          </View>
-        </View>
-        <View style={styles.deviceToggleContainer}>
-          <ToggleSwitch
-            isOn={item.localStatus}
-            onColor="#7BF3FF"
-            offColor="red"
-            label="Device Status"
-            labelStyle={{ color: "#fff" }}
-            size="small"
-            onToggle={(isOn) => handleToggle(isOn, item._id)}
+        <View>
+          <CircularProgress
+            value={60}
+            radius={50}
+            duration={2000}
+            progressValueColor={"#ecf0f1"}
+            maxValue={200}
+            title={"KM/H"}
+            titleColor={"white"}
+            titleStyle={{ fontWeight: "bold" }}
           />
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.deviceName}>Goal Name</Text>
           <Ionicons
             name="ios-trash-bin-outline"
             size={24}
             color="#fff"
             style={styles.trash}
+            onPress={() => handleTrashIconClick(item._id)} // Handle trash icon click
           />
         </View>
       </View>
@@ -264,6 +234,13 @@ const styles = StyleSheet.create({
   },
   trash: {
     marginLeft: 20,
+  },
+  nameContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: widthPercentageToDP(40),
+    marginTop: 20,
   },
 });
 

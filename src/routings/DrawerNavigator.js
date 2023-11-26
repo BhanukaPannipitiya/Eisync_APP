@@ -1,6 +1,6 @@
 // DrawerNavigator.js
 import React from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerContent } from "@react-navigation/drawer";
 import AppNavigation from "./AppNavigation";
 import Account from "../pages/Account";
 import AddNewAppliance from "../pages/AddNewAppliance";
@@ -14,12 +14,14 @@ import Home from "../pages/Home";
 import BottomNav from "../components/NavigationBarBottom";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { Ionicons } from "@expo/vector-icons";
+import CustomDrawerContent from "../components/DrawerContent";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
+    drawerContent={props =><CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
         drawerActiveTintColor: "#4ECCA3",

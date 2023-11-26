@@ -9,6 +9,8 @@ import * as Yup from "yup";
 import CustomTextFieldWithTitle from "../components/CustomTextFieldWithTitle";
 import CustomSubmit from "../components/CustomSubmitButton";
 import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -19,6 +21,7 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const SignInPage = ({ navigation }) => {
+  const { setGlobalUserId } = useContext(AuthContext);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -28,12 +31,12 @@ const SignInPage = ({ navigation }) => {
     validationSchema: SignUpSchema,
     onSubmit: (values) => {
       // Handle form submission, you can use values object here
-      // navigation.navigate("Home")
+      navigation.navigate("Home");
     },
   });
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://192.168.43.56:3000/loginUser", {
+      const response = await fetch("http://192.168.8.164:3000/loginUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,9 +50,12 @@ const SignInPage = ({ navigation }) => {
       const data = await response.json();
 
       if (response.ok) {
+        const userId = data.userId;
+        setGlobalUserId(userId);
+        console.log("userId", userId);
         console.log(data.message); // Log the success message
         // Handle successful login, e.g., navigate to the home screen
-        // navigation.navigate('Home');
+        navigation.navigate("Home");
       } else {
         console.error("Error:", data.message);
         // Handle login failure, e.g., display an error message to the user
@@ -166,8 +172,7 @@ const SignInPage = ({ navigation }) => {
         <View>
           <TouchableOpacity
             style={styles.facebookIconContainer}
-            onPress={handleFacebookSignIn}
-          >
+            onPress={handleFacebookSignIn}>
             <Image
               style={styles.facebookIcon}
               source={require("../assets/Facebook.png")}
@@ -178,8 +183,7 @@ const SignInPage = ({ navigation }) => {
         <View>
           <TouchableOpacity
             style={styles.googleContainer}
-            onPress={handleGoogleSignIn}
-          >
+            onPress={handleGoogleSignIn}>
             <Image
               style={styles.googleIcon}
               source={require("../assets/Google.png")}

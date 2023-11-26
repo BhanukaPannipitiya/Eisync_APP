@@ -18,16 +18,21 @@ import BottomNav from "../components/NavigationBarBottom";
 import CustomTextFieldWithTitle from "../components/CustomTextFieldWithTitle";
 import CustomSubmit from "../components/CustomSubmitButton";
 import { register } from "../Apis/UserAPI";
+import ToggleSwitch from "toggle-switch-react-native";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const AddNewAppliance = () => {
+  const { userId } = useContext(AuthContext);
   const [deviceType, setDeviceType] = useState("");
   const [deviceBrand, setDeviceBrand] = useState("");
   const [deviceModel, setDeviceModel] = useState("");
   const [power, setPower] = useState("");
   const [voltage, setVoltage] = useState("");
   const [estimatedOnHours, setEstimatedOnHours] = useState("");
+  const [isDeviceOn, setIsDeviceOn] = useState(true);
 
   const showToast = (message) => {
     ToastAndroid.showWithGravityAndOffset(
@@ -51,7 +56,8 @@ const AddNewAppliance = () => {
       deviceBrand: deviceBrand,
       isActive: true,
       createdOn: new Date(),
-      userId: Math.floor(Math.random() * 100) + 1,
+      deviceONStatus: isDeviceOn, // Use the state for deviceONStatus
+      userId:userId,
     };
 
     try {
@@ -85,7 +91,7 @@ const AddNewAppliance = () => {
       showToast("Error adding device. Please try again.");
     }
   };
-
+  console.log("first",isDeviceOn)
   return (
     <SafeAreaView style={styles.parentContainer}>
       <ScrollView>
@@ -138,6 +144,17 @@ const AddNewAppliance = () => {
               value={estimatedOnHours}
               onChangeText={(text) => setEstimatedOnHours(text)}
             />
+            <View>
+              <ToggleSwitch
+                isOn={isDeviceOn}
+                onColor="#4ECCA3"
+                offColor="#D3D3D3"
+                label="Is the device on?"
+                labelStyle={{ color: "black" }}
+                size="small"
+                onToggle={(newState) => setIsDeviceOn(newState)} // Update the state on toggle
+              />
+            </View>
             {/* Add a button to submit the form */}
             <TouchableOpacity
               style={styles.submitButton}
