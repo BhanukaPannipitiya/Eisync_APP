@@ -16,9 +16,13 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="StarterPage"
       screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={DrawerNavigator} options={{headerShown:false}} />
+      <Stack.Screen
+        name="Home"
+        component={DrawerNavigator}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="StarterPage" component={StarterPage} />
       <Stack.Screen name="SignUp" component={SignUpPage} />
       <Stack.Screen name="SignIn" component={SignInPage} />

@@ -23,7 +23,7 @@ const DrawerNavigator = () => {
     <Drawer.Navigator
     drawerContent={props =><CustomDrawerContent {...props} />}
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
         drawerActiveTintColor: "#4ECCA3",
         drawerInactiveTintColor: "black",
       }}>

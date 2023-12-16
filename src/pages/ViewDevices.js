@@ -22,12 +22,11 @@ const ViewDevices = () => {
   const [appliances, setAppliances] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState(null);
-  
 
   useEffect(() => {
     fetchAppliances();
     getActiveDevices();
-  }, []);
+  }, [userId]);
 
   // console.log(userId);
   const fetchAppliances = async () => {

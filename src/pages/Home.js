@@ -6,14 +6,19 @@ import Header from "../components/Header";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { LineChart } from "react-native-chart-kit";
 import CustomSubmit from "../components/CustomSubmitButton";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
+  const navigation = useNavigation();
+  const addNewDevice = () => {
+    navigation.navigate("addDevices");
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
         <View style={styles.headingContainer}>
           <Text style={styles.heading}>
-            Welcome <Text style={styles.subHeading}>Name</Text>
+            Welcome <Text style={styles.subHeading}>Bhanuka</Text>
           </Text>
           <Image source={require("../assets/profpic.png")} style={styles.profileIcon} />
         </View>
@@ -113,7 +118,7 @@ const Home = () => {
         </View>
         <View style={styles.button}>
           <CustomSubmit
-            buttonFunction={() => console.log("Hi")}
+            buttonFunction={addNewDevice}
             inlineStyle={{ color: "white" }}
             submitText={"Add an appliance"}
             backgroundColor={"#4ECCA3"}

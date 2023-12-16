@@ -7,14 +7,62 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import CustomSubmit from "../components/CustomSubmitButton";
+import { REACT_APP_BASE_URL } from "@env";
+import AuthContext from "../context/AuthContext";
 
 const Account = () => {
-  const updateUser = () => {
-    console.log("Update user");
+  const { userId } = useContext(AuthContext);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState("");
+
+  useEffect(() => {
+    // Make the API call to retrieve user details
+    fetch(`${REACT_APP_BASE_URL}/getUserDetailsById/?id=${userId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.userDetails) {
+          const { name, phoneNumber, country } = data.userDetails;
+          setName(name);
+          setPhone(phoneNumber);
+          setCountry(country);
+        }
+      })
+      .catch((error) => console.error("Error fetching user details:", error));
+  }, [userId]);
+
+  const updateUser = async () => {
+    try {
+      // Replace 'your-api-url' with the actual API URL
+      const apiUrl = `${REACT_APP_BASE_URL}/updateUserDetails/?id=${userId}`;
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: userId,
+          name,
+          phone,
+          country,
+        }),
+      });
+
+      const data = await response.json();
+
+      console.log(data);
+
+      // Handle the response accordingly, e.g., show a success message
+    } catch (error) {
+      console.error("Error updating user:", error);
+      // Handle the error, e.g., show an error message
+    }
   };
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -23,42 +71,50 @@ const Account = () => {
           style={styles.photoContainer}
         />
         <View style={styles.details}>
-            <Text style={styles.name}>Name</Text>
+          <Text style={styles.name}>Name</Text>
           <View style={styles.nameContainer}>
             <Ionicons name="person" size={24} color="black" />
-            <TextInput style={styles.nameInput} placeholder="Enter your name" />
+            <TextInput
+              style={styles.nameInput}
+              placeholder="Enter your name"
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
           </View>
-            <Text style={styles.phone}>Phone</Text>
+          <Text style={styles.phone}>Phone</Text>
           <View style={styles.phoneContainer}>
             <Ionicons name="call" size={24} color="black" />
             <TextInput
               style={styles.phoneInput}
               placeholder="Enter your phone"
+              value={phone}
+              onChangeText={(text) => setPhone(text)}
             />
           </View>
-            <Text style={styles.address}>Country</Text>
+          <Text style={styles.address}>Country</Text>
           <View style={styles.countryContainer}>
             <Ionicons name="location" size={24} color="black" />
             <TextInput
               style={styles.addressInput}
               placeholder="Enter your country"
+              value={country}
+              onChangeText={(text) => setCountry(text)}
             />
           </View>
         </View>
         <TouchableOpacity style={styles.submitButton} onPress={updateUser}>
-            <CustomSubmit
-              buttonFunction={updateUser}
-              inlineStyle={{ color: "white" }}
-              submitText={"Save "}
-              backgroundColor={"#4ECCA3"}
-              style={styles.submitButton}
-            />
-          </TouchableOpacity>
+          <CustomSubmit
+            buttonFunction={updateUser}
+            inlineStyle={{ color: "white" }}
+            submitText={"Save "}
+            backgroundColor={"#4ECCA3"}
+            style={styles.submitButton}
+          />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
-
 export default Account;
 
 const styles = StyleSheet.create({
@@ -147,6 +203,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-
-
 });
