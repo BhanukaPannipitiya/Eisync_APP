@@ -18,7 +18,7 @@ const BottomTabNavigator = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle:styles.tabBarStyle,
+        tabBarStyle: styles.tabBarStyle,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === "HomeTab") {
@@ -35,33 +35,45 @@ const BottomTabNavigator = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}>
-      <Tab.Screen name="HomeTab" component={Home} options={{
-        tabBarLabel: 'Home',
-        // tabBarButton: (props) => <CustomTabBarButton {...props} />,
-      }}/>
-      <Tab.Screen name="CostEstimationTab" component={CostEstimation} options={{
-        tabBarLabel: 'Cost Estimation',
-        // tabBarButton: (props) => <CustomTabBarButton {...props} />,
-      }}/>
-      <Tab.Screen name="MyGoalsTab" component={MyGoals} options={{
+      <Tab.Screen
+        name="HomeTab"
+        component={Home}
+        options={{
+          tabBarLabel: "Home",
+          // tabBarButton: (props) => <CustomTabBarButton {...props} />,
+        }}
+      />
+      <Tab.Screen
+        name="CostEstimationTab"
+        component={CostEstimation}
+        options={{
+          tabBarLabel: "Cost Estimation",
+          // tabBarButton: (props) => <CustomTabBarButton {...props} />,
+        }}
+      />
+      {/* <Tab.Screen name="MyGoalsTab" component={MyGoals} options={{
         tabBarLabel: 'My Goals',
         // tabBarButton: (props) => <CustomTabBarButton {...props} />,
-      }}/>
-      <Tab.Screen name="AddNewApplianceTab" component={AddNewAppliance} options={{
-        tabBarLabel: 'Add New Appliance',
-        // tabBarButton: (props) => <CustomTabBarButton {...props} />,
-      }}/>
+      }}/> */}
+      <Tab.Screen
+        name="AddNewApplianceTab"
+        component={AddNewAppliance}
+        options={{
+          tabBarLabel: "Add New Appliance",
+          // tabBarButton: (props) => <CustomTabBarButton {...props} />,
+        }}
+      />
     </Tab.Navigator>
   );
 };
 
 const styles = StyleSheet.create({
-    tabBarStyle: {
-        position: 'absolute',
-        elevation: 0,
-        backgroundColor: '#ffffff',
-        borderRadius: 15,
-        height: 60,
-    },  
-})
+  tabBarStyle: {
+    position: "absolute",
+    elevation: 0,
+    backgroundColor: "#ffffff",
+    borderRadius: 15,
+    height: 60,
+  },
+});
 export default BottomTabNavigator;

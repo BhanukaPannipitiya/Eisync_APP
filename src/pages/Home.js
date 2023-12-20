@@ -1,5 +1,12 @@
-import { Dimensions, Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import NavigationBarBottom from "../components/NavigationBarBottom";
 import BottomNav from "../components/NavigationBarBottom";
 import Header from "../components/Header";
@@ -7,12 +14,66 @@ import CircularProgress from "react-native-circular-progress-indicator";
 import { LineChart } from "react-native-chart-kit";
 import CustomSubmit from "../components/CustomSubmitButton";
 import { useNavigation } from "@react-navigation/native";
+import AuthContext from "../context/AuthContext";
+import { REACT_APP_BASE_URL } from "@env";
 
 const Home = () => {
+  const { userId } = useContext(AuthContext);
   const navigation = useNavigation();
+  const [energyUsed, setEnergyUsed] = useState(0);
+  const [activeDevices, setActiveDevices] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllActiveAppliances(userId);
+        console.log("data",data)
+        setEnergyUsed(data.totalPower);
+        setActiveDevices(data.activeDeviceCount);
+        setError(null);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Error fetching data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [userId]); // Include userId as a dependency to re-fetch data when userId changes
+
   const addNewDevice = () => {
     navigation.navigate("addDevices");
   };
+
+  const getAllActiveAppliances = async (userId) => {
+    try {
+      const apiUrl = `${REACT_APP_BASE_URL}/getAllActiveAppliances/?id=${userId}`;
+
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("respomse",response)
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching appliances:", error);
+      throw error;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
@@ -20,7 +81,10 @@ const Home = () => {
           <Text style={styles.heading}>
             Welcome <Text style={styles.subHeading}>Bhanuka</Text>
           </Text>
-          <Image source={require("../assets/profpic.png")} style={styles.profileIcon} />
+          <Image
+            source={require("../assets/profpic.png")}
+            style={styles.profileIcon}
+          />
         </View>
         <View style={styles.Maincontainer}>
           <View style={styles.energyUsedConatiner}>
@@ -28,7 +92,7 @@ const Home = () => {
               <Text style={styles.insideText}>Energy Used</Text>
               <View>
                 <CircularProgress
-                  value={50}
+                  value={energyUsed}
                   radius={50}
                   inActiveStrokeOpacity={1}
                   activeStrokeWidth={15}
@@ -50,28 +114,28 @@ const Home = () => {
               </View>
             </View>
             <View style={styles.goal}>
-              <Text style={styles.insideText}>Goal</Text>
+              <Text style={styles.insideText}>Active Devices</Text>
               <View>
                 <CircularProgress
-                  value={70}
+                  value={activeDevices}
                   radius={50}
                   duration={2000}
                   progressValueColor={"#fff"}
                   maxValue={100}
                   titleColor={"#fff"}
                   titleStyle={{ fontWeight: "bold" }}
-                  valueSuffix={"%"}
+                  valueSuffix={""}
                 />
               </View>
             </View>
           </View>
         </View>
-        <View style={styles.headingContainerinner}>
+        {/* <View style={styles.headingContainerinner}>
           <Text style={styles.headinginner}>
             Check <Text style={styles.subHeadinginner}>Usage</Text>
           </Text>
-        </View>
-        <View style={styles.graph}>
+        </View> */}
+        {/* <View style={styles.graph}>
           <LineChart
             data={{
               labels: ["January", "February", "March", "April", "May", "June"],
@@ -115,7 +179,7 @@ const Home = () => {
               borderRadius: 16,
             }}
           />
-        </View>
+        </View> */}
         <View style={styles.button}>
           <CustomSubmit
             buttonFunction={addNewDevice}
@@ -219,6 +283,4 @@ const styles = StyleSheet.create({
     borderColor: "#4ECCA3",
     borderWidth: 2,
   },
-
-  
 });

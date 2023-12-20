@@ -21,7 +21,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-    drawerContent={props =><CustomDrawerContent {...props} />}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: true,
         drawerActiveTintColor: "#4ECCA3",
@@ -107,7 +107,7 @@ const DrawerNavigator = () => {
           },
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="EnergyConsumeAnalysisDrawer"
         component={EnergyConsumeAnalysis}
         options={{
@@ -126,8 +126,8 @@ const DrawerNavigator = () => {
             marginLeft: -15,
           },
         }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="MyGoalsDrawer"
         component={MyGoals}
         options={{
@@ -146,7 +146,7 @@ const DrawerNavigator = () => {
             marginLeft: -15,
           },
         }}
-      />
+      /> */}
       <Drawer.Screen
         name="ViewCostEstimationHistoryDrawer"
         component={ViewCostEstimationHistory}

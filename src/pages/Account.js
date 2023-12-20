@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -19,6 +20,15 @@ const Account = () => {
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("");
 
+  const showToast = (message) => {
+    ToastAndroid.showWithGravityAndOffset(
+      message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50
+    );
+  };
   useEffect(() => {
     // Make the API call to retrieve user details
     fetch(`${REACT_APP_BASE_URL}/getUserDetailsById/?id=${userId}`)
@@ -33,6 +43,8 @@ const Account = () => {
       })
       .catch((error) => console.error("Error fetching user details:", error));
   }, [userId]);
+
+  
 
   const updateUser = async () => {
     try {
@@ -55,8 +67,7 @@ const Account = () => {
       const data = await response.json();
 
       console.log(data);
-
-      // Handle the response accordingly, e.g., show a success message
+      showToast("User Updated Succssfully!");
     } catch (error) {
       console.error("Error updating user:", error);
       // Handle the error, e.g., show an error message
